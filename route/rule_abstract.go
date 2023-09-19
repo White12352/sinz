@@ -10,6 +10,7 @@ import (
 )
 
 type abstractDefaultRule struct {
+	tag                     string
 	items                   []RuleItem
 	sourceAddressItems      []RuleItem
 	sourcePortItems         []RuleItem
@@ -137,6 +138,9 @@ func (r *abstractDefaultRule) Outbound() string {
 }
 
 func (r *abstractDefaultRule) String() string {
+	if r.tag != "" {
+		return "rule_tag=" + r.tag
+	}
 	if !r.invert {
 		return strings.Join(F.MapToString(r.allItems), " ")
 	} else {
@@ -145,6 +149,7 @@ func (r *abstractDefaultRule) String() string {
 }
 
 type abstractLogicalRule struct {
+	tag         string
 	rules       []adapter.Rule
 	mode        string
 	invert      bool
@@ -212,6 +217,9 @@ func (r *abstractLogicalRule) Outbound() string {
 }
 
 func (r *abstractLogicalRule) String() string {
+	if r.tag != "" {
+		return "rule_tag=" + r.tag
+	}
 	var op string
 	switch r.mode {
 	case C.LogicalTypeAnd:
