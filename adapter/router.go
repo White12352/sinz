@@ -22,6 +22,9 @@ type Router interface {
 	Outbound(tag string) (Outbound, bool)
 	DefaultOutbound(network string) Outbound
 
+	ProxyProviders() []ProxyProvider
+	ProxyProvider(tag string) (ProxyProvider, bool)
+
 	FakeIPStore() FakeIPStore
 
 	RouteConnection(ctx context.Context, conn net.Conn, metadata InboundContext) error
